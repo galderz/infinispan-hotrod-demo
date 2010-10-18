@@ -1,0 +1,40 @@
+To run the demo, first of all, create the following applications in your IDE:
+
+1. ReplHotRod1: acme.infinispan.hotrod.HotRod with VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=lo2 -Dhotrod.host=lo2 -Dhotrod.cfg=repl-config.xml -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+2. ReplHotRod2: acme.infinispan.hotrod.HotRod
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=lo3 -Dhotrod.host=lo3 -Dhotrod.cfg=repl-config.xml -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+3. ReplHotRodClient.connectAndLoad: class=acme.infinispan.hotrod.ReplHotRodClient method=connectAndLoad and VM params:
+-Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+4. ReplHotRodClient.getOnReadLoop: class=acme.infinispan.hotrod.ReplHotRodClient method=getOnReadLoop and VM params:
+-Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+5. DistHotRod1: acme.infinispan.hotrod.HotRod and VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=lo4 -Dhotrod.host=lo4 -Dhotrod.cfg=dist-config.xml -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+6. DistHotRod2: acme.infinispan.hotrod.HotRod and VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=lo5 -Dhotrod.host=lo5 -Dhotrod.cfg=dist-config.xml -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+7. DistHotRod3: acme.infinispan.hotrod.HotRod and VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=lo6 -Dhotrod.host=lo6 -Dhotrod.cfg=dist-config.xml -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+8. DistHotRodClient.loadKeys: class=acme.infinispan.hotrod.DistHotRodClient method=loadKeys and VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=127.0.0.1 -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+9. DistHotRodClient.getIndexedInLoop: class=acme.infinispan.hotrod.DistHotRodClient method=getIndexedInLoop and VM params:
+-Djava.net.preferIPv4Stack=true -Djgroups.bind_addr=127.0.0.1 -Dlog4j.configuration=file:/Users/z/JBoss/others/logging/log4j/log4j-infinispan-demo.xml
+
+Demo preparation:
+1. Start ReplHotRod1
+2. Execute ReplHotRodClient.connectAndLoad
+3. Start DistHotRod1, DistHotRod2, DistHotRod3
+4. Execute ReplHotRodClient.loadKeys
+
+Demo:
+1. Execute ReplHotRodClient.getOnReadLoop and hit enter 2 times
+2. Start ReplHotRod2 and execute loop a few times to show load balancing
+3. Shutdown ReplHotRod1 and show that we can failover cleanly
+4. Execute DistHotRodClient.getIndexedInLoop and show smart routing  

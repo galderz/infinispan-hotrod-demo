@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>acme.infinispan</groupId>
+   <artifactId>hotrod</artifactId>
+   <name>Infinispan Hot Rod demo application</name>
+   <description>Infinispan Hot Rod demo application</description>
+   <version>0.0.1-SNAPSHOT</version>
+
+   <properties>
+      <version.infinispan>4.2.0.Alpha2</version.infinispan>
+      <version.jcipannotations>1.0</version.jcipannotations>
+      <version.testng>5.11</version.testng>
+      <version.scala>2.8.0</version.scala>
+   </properties>
+
+   <dependencies>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-core</artifactId>
+         <version>${version.infinispan}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-client-hotrod</artifactId>
+         <version>${version.infinispan}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.infinispan</groupId>
+        <artifactId>infinispan-server-core</artifactId>
+        <version>${version.infinispan}</version>
+     </dependency>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-server-hotrod</artifactId>
+         <version>${version.infinispan}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-server-hotrod</artifactId>
+         <version>${version.infinispan}</version>
+         <type>test-jar</type>
+      </dependency>
+
+      <dependency>
+         <groupId>net.jcip</groupId>
+         <artifactId>jcip-annotations</artifactId>
+         <version>${version.jcipannotations}</version>
+         <optional>true</optional>
+      </dependency>
+
+      <dependency>
+         <groupId>org.testng</groupId>
+         <artifactId>testng</artifactId>
+         <version>${version.testng}</version>
+         <classifier>jdk15</classifier>
+      </dependency>
+
+      <dependency>
+         <groupId>org.scala-lang</groupId>
+         <artifactId>scala-library</artifactId>
+         <version>${version.scala}</version>
+      </dependency>
+
+   </dependencies>
+
+   <build>
+      <finalName>infinispan</finalName>
+      <sourceDirectory>src/main/scala</sourceDirectory>
+
+      <plugins>
+         <plugin>
+            <groupId>org.scala-tools</groupId>
+            <artifactId>maven-scala-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>compile</id>
+                  <goals>
+                     <goal>compile</goal>
+                  </goals>
+                  <phase>compile</phase>
+               </execution>
+               <execution>
+                  <id>test-compile</id>
+                  <goals>
+                     <goal>testCompile</goal>
+                  </goals>
+                  <phase>test-compile</phase>
+               </execution>
+               <execution>
+                  <phase>process-resources</phase>
+                  <goals>
+                     <goal>compile</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <scalaVersion>2.8.0</scalaVersion>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <configuration>
+               <instructions>
+                  <Export-Package>
+                     ${project.groupId}.server.hotrod.*;version=${project.version};-split-package:=error
+                  </Export-Package>
+               </instructions>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+</project>
+
